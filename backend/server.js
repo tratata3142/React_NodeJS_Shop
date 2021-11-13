@@ -20,10 +20,12 @@ app.use('/api/orders', orderRouter)
 app.get('/api/config/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb')
 })
-app.use('/uploads', express.static(path.join(path.resolve(), '/uploads')))
-app.get('/', (req, res) => {
-  res.send('Server is ready')
-})
+const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+app.use(express.static(path.join(__dirname, '/frontend/build')))
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+)
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message })
