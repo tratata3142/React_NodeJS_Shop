@@ -69,12 +69,12 @@ productRouter.get(
   expressAsyncHandler(async (req, res) => {
     const seller = await User.findOne({ isSeller: true })
     if (seller) {
-      const products = data.products.map((product, index) => ({
+      const products = data.products.map((product) => ({
         ...product,
         seller: seller._id,
       }))
       const createdProducts = await Product.insertMany(products)
-      res.send({ createdProduct })
+      res.send({ createdProducts })
     } else {
       res
         .status(500)
