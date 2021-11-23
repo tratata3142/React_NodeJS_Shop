@@ -95,7 +95,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState()
   try {
-    const { data } = await axios.get('api/orders/mine', {
+    const { data } = await axios.get('/api/orders/mine', {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     })
     dispatch({ type: ORDER_MINE_LIST_SUCCESS, payload: data })
@@ -107,31 +107,33 @@ export const listOrderMine = () => async (dispatch, getState) => {
     dispatch({ type: ORDER_MINE_LIST_FAIL, payload: message })
   }
 }
-export const listOrders = () => async (dispatch, getState) => {
-  dispatch({ type: ORDER_LIST_REQUEST })
-  const {
-    userSignin: { userInfo },
-  } = getState()
-  try {
-    const { data } = await axios.get('api/orders', {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    })
-    dispatch({ type: ORDER_LIST_SUCCESS, payload: data })
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message
-    dispatch({ type: ORDER_LIST_FAIL, payload: message })
+export const listOrders =
+  ({ seller = '' }) =>
+  async (dispatch, getState) => {
+    dispatch({ type: ORDER_LIST_REQUEST })
+    const {
+      userSignin: { userInfo },
+    } = getState()
+    try {
+      const { data } = await axios.get(`/api/orders?seller=${seller}`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      })
+      dispatch({ type: ORDER_LIST_SUCCESS, payload: data })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      dispatch({ type: ORDER_LIST_FAIL, payload: message })
+    }
   }
-}
 export const deleteOrder = (orderId) => async (dispatch, getState) => {
   dispatch({ type: ORDER_DELETE_REQUEST })
   const {
     userSignin: { userInfo },
   } = getState()
   try {
-    await axios.delete(`api/orders/${orderId}`, {
+    await axios.delete(`/api/orders/${orderId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     })
     dispatch({ type: ORDER_DELETE_SUCCESS })

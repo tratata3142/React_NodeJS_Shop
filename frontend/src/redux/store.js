@@ -6,13 +6,20 @@ import {
   productCreateReducer,
   productUpdateReducer,
   productDeleteReducer,
+  productCategoryListReducer,
+  productReviewCreateReducer,
 } from './reducers/productReducer'
 import { cartReducer } from './reducers/cartReducer'
 import {
+  userAddressMapReducer,
+  userDeleteReducer,
   userDetailsReducer,
+  userListReducer,
   userRegisterReducer,
   userSigninReducer,
+  userTopSellerListReducer,
   userUpdateProfileReducer,
+  userUpdateReducer,
 } from './reducers/userReducer'
 import {
   orderCreateReducer,
@@ -42,10 +49,7 @@ const initialState = {
 }
 
 const rootReducer = combineReducers({
-  productList: productListReducer,
-  productDetails: productDetailsReducer,
   cart: cartReducer,
-  userRegister: userRegisterReducer,
   userSignin: userSigninReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
@@ -54,11 +58,21 @@ const rootReducer = combineReducers({
   orderDeliver: orderDeliverReducer,
   orderMineList: orderMineListReducer,
   orderList: orderListReducer,
+  userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
+  userDelete: userDeleteReducer,
+  userTopSellerList: userTopSellerListReducer,
+  userList: userListReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userUpdate: userUpdateReducer,
+  userAddressMap: userAddressMapReducer,
+  productDetails: productDetailsReducer,
+  productList: productListReducer,
+  productCategoryList: productCategoryListReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
   productDelete: productDeleteReducer,
+  productReviewCreate: productReviewCreateReducer,
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

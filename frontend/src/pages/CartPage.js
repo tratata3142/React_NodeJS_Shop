@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from '../redux/actions/cartActions'
 import MessageBox from '../components/MessageBox'
 import { Link } from 'react-router-dom'
+import { CART_ERROR_NULL } from '../redux/constants/cartConstants'
 
 const CartPage = (props) => {
   const dispatch = useDispatch()
-  const { cartItems } = useSelector((state) => state.cart)
+  const { cartItems, error } = useSelector((state) => state.cart)
   const productId = props.match.params.id
   const qty = props.location.search
     ? Number(props.location.search.split('=')[1])
@@ -16,6 +17,7 @@ const CartPage = (props) => {
     if (productId) {
       dispatch(addToCart(productId, qty))
     }
+    return dispatch({ type: CART_ERROR_NULL })
   }, [dispatch, productId, qty])
 
   const removeFromCartHandler = (id) => {
@@ -30,6 +32,7 @@ const CartPage = (props) => {
     <div className="row top">
       <div className="col-2">
         <h1>Shoping Cart</h1>
+        {error && <MessageBox variant="danger">{error}</MessageBox>}
         {cartItems.length === 0 ? (
           <MessageBox>
             Cart is empty. <Link to="/">Go Shoping</Link>

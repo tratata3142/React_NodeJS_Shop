@@ -6,7 +6,9 @@ import { deleteOrder, listOrders } from '../redux/actions/orderActions'
 import { ORDER_DELETE_RESET } from '../redux/constants/orderConstants'
 
 const OrderListPage = (props) => {
+  const sellerMode = props.match.path.indexOf('/seller') >= 0
   const { loading, error, orders } = useSelector((state) => state.orderList)
+  const { userInfo } = useSelector((state) => state.userSignin)
   const {
     loading: loadingDelete,
     error: errorDelete,
@@ -16,8 +18,8 @@ const OrderListPage = (props) => {
 
   useEffect(() => {
     dispatch({ type: ORDER_DELETE_RESET })
-    dispatch(listOrders())
-  }, [dispatch, successDelete])
+    dispatch(listOrders({ seller: sellerMode ? userInfo._id : '' }))
+  }, [dispatch, sellerMode, successDelete, userInfo])
 
   const deleteHandler = (order) => {
     if (window.confirm('Are you sure to delete?')) {

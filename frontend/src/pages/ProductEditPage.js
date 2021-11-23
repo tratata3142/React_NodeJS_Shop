@@ -71,7 +71,7 @@ const ProductEditPage = (props) => {
     bodyFormData.append('image', file)
     setLoadingUpload(true)
     try {
-      const { data } = await axios.post('/api/uploads', bodyFormData, {
+      const { data } = await axios.post('/api/uploads/s3', bodyFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${userInfo.token}`,
@@ -117,16 +117,6 @@ const ProductEditPage = (props) => {
                 type="text"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="image">Image</label>
-              <input
-                id="image"
-                placeholder="Enter image"
-                type="text"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
               />
             </div>
             <div>
